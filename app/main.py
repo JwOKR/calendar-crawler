@@ -41,8 +41,18 @@ app = FastAPI(
 
 @app.on_event("startup")
 def startup():
-    init_db()
-    init_scheduler(app)
+    try:
+        init_db()
+        logger.info("数据库初始化成功")
+    except Exception as e:
+        logger.error(f"数据库初始化失败: {e}")
+
+    try:
+        init_scheduler(app)
+        logger.info("定时任务初始化成功")
+    except Exception as e:
+        logger.error(f"定时任务初始化失败: {e}")
+
     logger.info("Calendar Crawler 服务已启动")
 
 
