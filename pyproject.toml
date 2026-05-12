@@ -1,0 +1,18 @@
+[project]
+name = "calendar-crawler"
+version = "1.0.0"
+description = "Auto crawl websites for calendar events and generate ICS subscription feeds"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.27.0",
+    "httpx>=0.26.0",
+    "beautifulsoup4>=4.12.0",
+    "trafilatura>=1.6.0",
+    "icalendar>=5.0.0",
+    "apscheduler>=3.10.0",
+    "pydantic>=2.0.0",
+    "playwright>=1.40.0",
+    "python-dateutil>=2.8.0",
+    "dateparser>=1.2.0",
+]

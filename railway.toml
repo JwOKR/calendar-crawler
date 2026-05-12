@@ -1,0 +1,31 @@
+[build]
+builder = "dockerfile"
+
+[deploy]
+startCommand = "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+
+[[services]]
+  name = "calendar-crawler"
+  protocol = "HTTP"
+  internalPort = 8000
+
+  [services.concurrency]
+    type = "connections"
+    hardLimit = 25
+    softLimit = 10
+
+  [[services.ports]]
+    type = "HTTP"
+    port = 443
+    handlers = ["http", "tls"]
+    tlsOptions = { alpnProtocols = ["h2", "http/1.1"] }
+
+  [services.httpCheck]
+    interval = "30s"
+    gracePeriod = "5s"
+    timeout = "5s"
+    path = "/health"
+    method = "GET"
+    protocol = "HTTP"
