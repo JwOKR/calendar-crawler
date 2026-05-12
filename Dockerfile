@@ -15,5 +15,5 @@ RUN mkdir -p data
 # 暴露端口
 EXPOSE 8000
 
-# 启动命令（支持 Railway 的 PORT 环境变量）
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# 启动命令：用 Python 读取 PORT 环境变量
+CMD ["python", "-c", "import os, uvicorn; from app.main import app; uvicorn.run(app, host='0.0.0.0', port=int(os.getenv('PORT', 8000)))"]
